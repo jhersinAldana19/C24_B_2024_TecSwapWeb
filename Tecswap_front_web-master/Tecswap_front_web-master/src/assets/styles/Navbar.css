@@ -1,5 +1,3 @@
-/* Navbar.css */
-
 .navbar {
     background-color: #ffffff; /* Color de fondo blanco */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efecto de sombra */
@@ -35,7 +33,7 @@
 
 .container-fluid {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centra horizontalmente */
     align-items: center;
 }
 

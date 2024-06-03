@@ -6,6 +6,8 @@ import AddProducto from './productos/AddProducto';
 import EditProducto from './productos/EditProducto';
 import ViewProducto from './productos/ViewProducto';
 import SobreNosotros from './pages/SobreNosotros';
+import MisProductos from './pages/MisProductos'; 
+
 
 function App() {
     return (
@@ -18,6 +20,7 @@ function App() {
                     <Route exact path="/editproducto/:id" element={<EditProducto />} />
                     <Route exact path="/viewproducto/:id" element={<ViewProducto />} />
                     <Route exact path="/sobrenosotros" element={<SobreNosotros />} />
+                    <Route exact path="/misproductos" element={<MisProductos />} /> 
                 </Routes>
             </BrowserRouter>
         </div>
