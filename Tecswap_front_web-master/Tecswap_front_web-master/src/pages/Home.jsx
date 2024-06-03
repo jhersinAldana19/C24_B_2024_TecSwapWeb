@@ -62,7 +62,7 @@ export default function Home() {
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                         />
-                        <button className="btn btn-primary mt-2" onClick={searchProductos}>Buscar</button>
+                        <button className="btn btn-dark mt-2" onClick={searchProductos}>Buscar</button>
                     </div>
                     <Link to="/addproducto" className="btn btn-dark my-4"> + Publicar</Link>
                 </div>

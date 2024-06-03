@@ -1,10 +1,12 @@
 import React from 'react';
+import Portada from '../components/Portada'; // Asegúrate de que la ruta sea correcta
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css'; // Asegúrate de que el archivo CSS esté importado
 
 const SobreNosotros = () => {
     return (
         <div>
+            <Portada />
             <div className="container my-4">
                 <h1 className="text-center comic-sans">Sobre nosotros</h1>
                 <div className="row my-4">
