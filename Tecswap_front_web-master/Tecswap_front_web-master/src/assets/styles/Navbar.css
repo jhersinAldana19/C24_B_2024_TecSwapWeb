@@ -1,0 +1,17 @@
+/* Navbar.css */
+
+.navbar {
+    background-color: #ffffff; /* Color de fondo blanco */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efecto de sombra */
+}
+
+.navbar-brand {
+    font-size: 1.5rem; /* Tamaño de la fuente para la marca */
+    color: #000000; /* Color del texto de la marca */
+}
+
+.navbar-brand:hover {
+    color: #555555; /* Color del texto de la marca al pasar el cursor */
+}
+
+/* Agrega aquí más estilos según sea necesario */
