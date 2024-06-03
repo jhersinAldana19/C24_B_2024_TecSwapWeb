@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import Mensaje from '../components/Mensaje';
+
 
 export default function Home() {
     const [productos, setProductos] = useState([]);
@@ -27,6 +29,7 @@ export default function Home() {
 
     return (
         <div className="container">
+            <Mensaje />
             <div className="py-4">
                 <div className="mb-4">
                     <input

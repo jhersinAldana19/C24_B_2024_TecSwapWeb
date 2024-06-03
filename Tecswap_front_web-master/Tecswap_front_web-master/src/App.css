@@ -1,3 +1,13 @@
+/* Importa la fuente Comic Sans MS */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap');
+
+.comic-sans {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #00B1F7;
+    font-size: 5em; 
+}
+
+
 .App {
   text-align: center;
 }
