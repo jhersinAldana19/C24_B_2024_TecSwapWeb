@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css';
+import StepsForTrueque from '../components/StepsForTrueque';
+import Mensaje from '../components/Mensaje';
 
 export default function Home() {
     const [productos, setProductos] = useState([]);
@@ -18,7 +22,8 @@ export default function Home() {
         try {
             const result = await axios.get("http://localhost:8080/productos");
             setProductos(result.data);
-        } catch (err) {
+        } catch (error) {
+            console.error("Error al cargar los productos:", error);
             setError("Error al cargar productos");
         } finally {
             setLoading(false);
@@ -35,79 +40,60 @@ export default function Home() {
             }
             const result = await axios.get(`http://localhost:8080/productos/search?query=${query}`);
             setProductos(result.data);
-        } catch (err) {
+        } catch (error) {
+            console.error("Error al buscar productos:", error);
             setError("Error al buscar productos");
         } finally {
             setLoading(false);
         }
     };
 
-    const deleteProducto = async (id) => {
-        setLoading(true);
-        setError(null);
-        try {
-            await axios.delete(`http://localhost:8080/producto/${id}`);
-            loadProductos();
-        } catch (err) {
-            setError("Error al eliminar producto");
-        } finally {
-            setLoading(false);
-        }
-    };
-
     return (
-        <div className="container">
-            <div className="py-4">
-                <div className="mb-4">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Buscar productos"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                    />
-                    <button className="btn btn-primary mt-2" onClick={searchProductos}>Buscar</button>
+        <div>
+            <div className="container"><br /><br />
+                <Mensaje />
+                <StepsForTrueque />
+                <div className="container">
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Buscar productos"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
+                        <button className="btn btn-primary mt-2" onClick={searchProductos}>Buscar</button>
+                    </div>
+                    <Link to="/addproducto" className="btn btn-dark my-4"> + Publicar</Link>
                 </div>
-                {loading ? (
-                    <div className="text-center">Cargando...</div>
-                ) : error ? (
-                    <div className="alert alert-danger">{error}</div>
-                ) : (
-                    <table className="table border">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Titulo</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Imagen</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {productos.map((producto, index) => (
-                                <tr key={index}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{producto.titulo}</td>
-                                    <td>{producto.descripcion}</td>
-                                    <td>{producto.estado}</td>
-                                    <td>{producto.cantidad}</td>
-                                    <td>{producto.categoria_id}</td>
-                                    <td>
-                                        <img src={`http://localhost:8080${producto.imagen}`} alt={producto.titulo} style={{ width: '100px', height: '100px' }} />
-                                    </td>
-                                    <td>
-                                        <Link className="btn btn-primary mx-2" to={`/viewproducto/${producto.id}`}>Ver</Link>
-                                        <Link className="btn btn-outline-primary mx-2" to={`/editproducto/${producto.id}`}>Editar</Link>
-                                        <button className="btn btn-danger mx-2" onClick={() => deleteProducto(producto.id)}>Eliminar</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                )}
+                <div className="py-4">
+                    <div className="row row-cols-1 row-cols-md-3 g-3">
+                        {loading ? (
+                            <div className="text-center">Cargando...</div>
+                        ) : error ? (
+                            <div className="alert alert-danger">{error}</div>
+                        ) : (
+                            productos.map((producto, index) => (
+                                <div className="col" key={index}>
+                                    <div className="card h-100">
+                                        <img
+                                            src={`http://localhost:8080/producto/files/${producto.imagen_id}`}
+                                            className="card-img-top"
+                                            alt={producto.titulo}
+                                            style={{ height: '150px', objectFit: 'cover' }}
+                                        />
+                                        <div className="card-body">
+                                            <h5 className="card-title">{producto.titulo}</h5>
+                                            <p className="card-text text-truncate">{producto.descripcion}</p>
+                                            <Link className="btn btn-dark btn-sm mx-2" to={`/viewproducto/${producto.id}`}>Ver</Link>
+                                            <Link className="btn btn-dark btn-sm mx-2" to={`/ofrecer-producto`}>Intercambiar</Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );
