@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css';
+import '../App.css'; // Verifica que este archivo esté en la ubicación correcta
 import StepsForTrueque from '../components/StepsForTrueque';
 import Mensaje from '../components/Mensaje';
 
@@ -62,7 +62,7 @@ export default function Home() {
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                         />
-                        <button className="btn btn-dark mt-2" onClick={searchProductos}>Buscar</button>
+                        <button className="btn btn-dark mt-2" onClick={searchProductos}>Buscarrrrrrr</button>
                     </div>
                     <Link to="/addproducto" className="btn btn-dark my-4"> + Publicar</Link>
                 </div>
