@@ -17,12 +17,14 @@
 
 .navbar-nav .nav-link.active {
     font-weight: bold;
-    color: #007bff !important;
-    border-bottom: 2px solid #007bff;
+    color: #00B1F7 !important;
+    border-bottom: 2px solid #00B1F7;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #0056b3 !important;
+    color: #00B1F7 !important;
 }
 
-/* Agrega aquí más estilos según sea necesario */
+.btn.btn-dark {
+    background-color: #00B1F7;
+  }

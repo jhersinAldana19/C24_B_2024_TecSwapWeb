@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Mensaje from '../components/Mensaje';
-import '../assets/styles/Home.css'; // Asegúrate de importar el archivo CSS
+import '../assets/styles/Home.css'; 
 import StepsForTrueque from '../components/StepsForTrueque';
 
 export default function Home() {
@@ -12,12 +12,13 @@ export default function Home() {
     useEffect(() => {
         loadProductos();
     }, []);
-
+    // para cargar los productos
     const loadProductos = async () => {
         const result = await axios.get("http://localhost:8080/productos");
         setProductos(result.data);
     };
 
+     // para buscar productos
     const searchProductos = async () => {
         const result = await axios.get(`http://localhost:8080/productos/search?query=${query}`);
         setProductos(result.data);

@@ -16,5 +16,8 @@
     padding: 10px 20px; /* Espaciado interno */
 }
 
-
+.btn.custom-btn {
+    background-color: #00B1F7;
+    color:white;
+}
 

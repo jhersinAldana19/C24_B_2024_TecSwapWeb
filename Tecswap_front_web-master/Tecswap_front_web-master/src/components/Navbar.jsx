@@ -28,7 +28,7 @@ export default function Navbar() {
                             </li>
                         </ul>
                     </div>
-                    <Link className="btn btn-dark" to="/addproducto">Add Producto</Link>
+                    <Link className="btn btn-dark" to="/addproducto">Publicar Producto</Link>
                 </div>
             </nav>
         </div>
