@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Mensaje from '../components/Mensaje';
-
+import '../assets/styles/Home.css'; // Asegúrate de importar el archivo CSS
+import StepsForTrueque from '../components/StepsForTrueque';
 
 export default function Home() {
     const [productos, setProductos] = useState([]);
@@ -22,59 +23,41 @@ export default function Home() {
         setProductos(result.data);
     };
 
-    const deleteProducto = async (id) => {
-        await axios.delete(`http://localhost:8080/producto/${id}`);
-        loadProductos();
-    };
-
     return (
         <div className="container">
             <Mensaje />
+            <StepsForTrueque />
             <div className="py-4">
-                <div className="mb-4">
+                <div className="mb-4 search-bar">
                     <input
                         type="text"
-                        className="form-control"
+                        className="form-control rounded-input"
                         placeholder="Buscar productos"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
-                    <button className="btn btn-primary mt-2" onClick={searchProductos}>Buscar</button>
+                    <button className="btn custom-btn rounded-button mt-2" onClick={searchProductos}>Buscar</button>
                 </div>
-                <table className="table border">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Titulo</th>
-                            <th scope="col">Descripcion</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Categoria</th>
-                            <th scope="col">Imagen</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {productos.map((producto, index) => (
-                            <tr key={index}>
-                                <th scope="row">{index + 1}</th>
-                                <td>{producto.titulo}</td>
-                                <td>{producto.descripcion}</td>
-                                <td>{producto.estado}</td>
-                                <td>{producto.cantidad}</td>
-                                <td>{producto.categoria_id}</td>
-                                <td>
-                                    <img src={`http://localhost:8080${producto.imagen}`} alt={producto.titulo} style={{ width: '100px', height: '100px' }} />
-                                </td>
-                                <td>
-                                    <Link className="btn btn-primary mx-2" to={`/viewproducto/${producto.id}`}>Ver</Link>
-                                    <Link className="btn btn-outline-primary mx-2" to={`/editproducto/${producto.id}`}>Editar</Link>
-                                    <button className="btn btn-danger mx-2" onClick={() => deleteProducto(producto.id)}>Eliminar</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div className="row">
+                    {productos.map((producto, index) => (
+                        <div className="col-md-4" key={index}>
+                            <div className="card mb-4 shadow-sm">
+                                <img src={`http://localhost:8080${producto.imagen}`} alt={producto.titulo} className="card-img-top" style={{ height: '200px', objectFit: 'cover' }} />
+                                <div className="card-body">
+                                    <h5 className="card-title">{producto.titulo}</h5>
+                                    <p className="card-text">{producto.descripcion}</p>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <div className="btn-group">
+                                            <Link className="btn btn-sm custom-btn" to={`/viewproducto/${producto.id}`}>Ver</Link>
+                                            <Link className="btn btn-dark btn-sm mx-2" to={`/ofrecer-producto`}>Intercambiar</Link>
+                                        </div>
+                                        <small className="text-muted">Cantidad: {producto.cantidad}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )

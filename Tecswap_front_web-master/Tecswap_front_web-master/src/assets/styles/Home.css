@@ -1,0 +1,20 @@
+/* Home.css */
+@import './variables.css';
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el input y el botón */
+}
+
+.form-control.rounded-input {
+    border-radius: 50px; /* Bordes circulares */
+    padding: 10px 20px; /* Espaciado interno */
+}
+
+.btn.rounded-button {
+    border-radius: 50px; /* Bordes circulares */
+    padding: 10px 20px; /* Espaciado interno */
+}
+
+
+

@@ -1,0 +1,10 @@
+/* variables.css */
+:root {
+    --primary-button-color: #00B1F7;
+}
+
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}

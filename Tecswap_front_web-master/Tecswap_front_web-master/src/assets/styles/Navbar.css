@@ -14,4 +14,15 @@
     color: #555555; /* Color del texto de la marca al pasar el cursor */
 }
 
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: #007bff !important;
+    border-bottom: 2px solid #007bff;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #0056b3 !important;
+}
+
 /* Agrega aquí más estilos según sea necesario */

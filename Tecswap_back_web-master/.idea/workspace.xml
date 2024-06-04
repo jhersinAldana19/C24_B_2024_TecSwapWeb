@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a15c7cc-b0da-4767-8c9b-f8b5d8598686" name="Changes" comment="" />
+    <list default="true" id="8a15c7cc-b0da-4767-8c9b-f8b5d8598686" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/assets/styles/Navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/assets/styles/Navbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/components/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/components/Portada.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/components/Portada.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/pages/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/pages/MisProductos.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/pages/MisProductos.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/pages/SobreNosotros.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Tecswap_front_web-master/Tecswap_front_web-master/src/pages/SobreNosotros.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,9 +26,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2hNx4IiQAhQHSCOWPtrSZZrwnD5" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -29,9 +39,9 @@
     "Application.ProyectoIntegradorApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "frontend",
+    "git-widget-placeholder": "front",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/cuartoCiclo/ConstruccionSoftware/tecswapWeb/C24_B_2024_TecSwapWeb/Tecswap_back_web-master",
+    "last_opened_file_path": "C:/cuartoCiclo/desarrollo-app-web/Semana14ABAldana/Semana14AB",
     "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
 }]]></component>

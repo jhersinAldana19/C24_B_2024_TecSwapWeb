@@ -1,15 +1,17 @@
 /* Importa la fuente Comic Sans MS */
 @import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap');
 
-.comic-sans {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    color: #00B1F7;
-    font-size: 5em; 
-}
+@import './assets/styles/variables.css';
 
+.comic-sans {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: #00B1F7;
+  font-size: 5em; 
+}
 
 .App {
   text-align: center;
+  background-color: rgb(239, 240, 222);
 }
 
 .App-logo {
@@ -45,4 +47,18 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.footer {
+  width: 100%;
+  background-color: #00B1F7;
+  color: white;
+}
+.footer-content {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 250px;
 }
