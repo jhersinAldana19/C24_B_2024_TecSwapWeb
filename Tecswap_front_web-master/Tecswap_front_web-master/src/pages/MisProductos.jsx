@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import '../assets/styles/MisProductos.css';
 
 export default function MisProductos() {
     const [productos, setProducto] = useState([]);
@@ -33,7 +32,7 @@ export default function MisProductos() {
         <div className="container my-5">
             <div className="py-4">
                 <h2 className="mb-4">Mis Productos</h2>
-                <table className="table table-hover table-bordered">
+                <table className="table table-hover table-bordered custom-table">
                     <thead className="thead-dark">
                         <tr>
                             <th scope="col">#</th>
@@ -55,14 +54,14 @@ export default function MisProductos() {
                                         src={`http://localhost:8080${producto.imagen}`} 
                                         alt={producto.titulo} 
                                         className="img-thumbnail" 
-                                        style={{ width: '100px', height: '100px', objectFit: 'cover' }} 
+                                        style={{ width: '100px', height: '100px', objectFit: 'contain' }} 
                                     />
                                 </td>
-                                <td>{producto.titulo}</td>
-                                <td>{producto.descripcion}</td>
-                                <td>{producto.estado}</td>
-                                <td>{producto.cantidad}</td>
-                                <td>{producto.categoria}</td>
+                                <td className="custom-text">{producto.titulo}</td>
+                                <td className="custom-text">{producto.descripcion}</td>
+                                <td className="custom-text">{producto.estado}</td>
+                                <td className="custom-text">{producto.cantidad}</td>
+                                <td className="custom-text">{producto.categoria}</td>
                                 <td>
                                     <Link className="btn btn-primary btn-sm mx-1" to={`/viewproducto/${producto.id}`}>Ver</Link>
                                     <Link className="btn btn-outline-primary btn-sm mx-1" to={`/editproducto/${producto.id}`}>Editar</Link>
