@@ -15,6 +15,8 @@ public class Producto {
     private String categoria_id;
     private String imagen;
 
+    private String usuarios_id;
+
     public Long getId() {
         return id;
     }
@@ -75,4 +77,13 @@ public class Producto {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
+    public String getUsuarios_id() {
+        return usuarios_id;
+    }
+
+    public void setUsuarios_id(String usuarios_id) {
+        this.usuarios_id = usuarios_id;
+    }
+
 }

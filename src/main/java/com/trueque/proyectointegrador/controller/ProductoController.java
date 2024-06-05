@@ -41,6 +41,7 @@ public class ProductoController {
                     producto.setCantidad(newProducto.getCantidad());
                     producto.setCategoria_id(newProducto.getCategoria_id());
                     producto.setImagen(newProducto.getImagen());
+                    producto.setUsuarios_id(newProducto.getUsuarios_id());
                     return productoRepository.save(producto);
                 }).orElseThrow(()->new ProductoNotFoundException(id));
     }
