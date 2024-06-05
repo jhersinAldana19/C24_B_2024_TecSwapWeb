@@ -9,6 +9,12 @@
   font-size: 5em; 
 }
 
+.comic-sobre {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: #00B1F7;
+  font-size: 2em; 
+}
+
 .App {
   text-align: center;
   background-color: rgb(243, 243, 243);

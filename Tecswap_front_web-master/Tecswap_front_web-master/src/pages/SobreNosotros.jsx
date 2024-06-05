@@ -8,7 +8,7 @@ const SobreNosotros = () => {
         <div>
             <Portada />
             <div className="container my-4">
-                <h1 className="text-center comic-sans">Sobre nosotros</h1>
+                <h1 className="text-center comic-sobre">Sobre nosotros</h1>
                 <div className="row my-4">
                     <div className="col-md-6 d-flex align-items-center">
                         <p>
@@ -20,7 +20,7 @@ const SobreNosotros = () => {
                     </div>
                 </div>
 
-                <h2 className="text-center my-5 comic-sans">Nuestros servicios</h2>
+                <h2 className="text-center my-5 comic-sobre">Nuestros servicios</h2>
                 <div className="row text-center">
                     <div className="col-md-4 mb-4">
                         <div className="card h-100 shadow-sm">
@@ -56,7 +56,7 @@ const SobreNosotros = () => {
                     </div>
                 </div>
 
-                <h2 className="text-center my-5 comic-sans">¿Por qué elegirnos?</h2>
+                <h2 className="text-center my-5 comic-sobre">¿Por qué elegirnos?</h2>
                 <ul className="list-unstyled text-center">
                     <li><i className="bi bi-check-circle-fill me-2"></i>Plataforma intuitiva y fácil de usar</li>
                     <li><i className="bi bi-check-circle-fill me-2"></i>Comunidad confiable y segura</li>
@@ -65,7 +65,7 @@ const SobreNosotros = () => {
                     <li><i className="bi bi-check-circle-fill me-2"></i>Variedad de productos disponibles para intercambio</li>
                 </ul>
 
-                <h2 className="text-center my-5 comic-sans">Conoce más sobre nosotros</h2>
+                <h2 className="text-center my-5 comic-sobre">Conoce más sobre nosotros</h2>
 <div className="row">
     <div className="col-md-6">
         <div className="ratio ratio-16x9">
