@@ -15,7 +15,7 @@ public class Producto {
     private String categoria_id;
     private String imagen;
 
-    //private String usuarios_id;
+    private String usuarios_id;
 
     public Long getId() {
         return id;
