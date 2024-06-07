@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "users")
+@Table(name = "api_usuario")
 @Data
 public class User {
 
@@ -22,4 +22,5 @@ public class User {
     private String lastname;
     private String imagen;
     private String carrera;
+
 }
