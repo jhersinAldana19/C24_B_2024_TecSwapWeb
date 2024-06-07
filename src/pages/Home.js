@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import api from '../services/api';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Home() {
     const [productos, setProductos] = useState([]);
@@ -11,17 +13,17 @@ export default function Home() {
     }, []);
 
     const loadProductos = async () => {
-        const result = await axios.get("http://localhost:8080/productos");
+        const result = await axios.get("http://localhost:8082/productos");
         setProductos(result.data);
     };
 
     const searchProductos = async () => {
-        const result = await axios.get(`http://localhost:8080/productos/search?query=${query}`);
+        const result = await axios.get(`http://localhost:8082/productos/search?query=${query}`);
         setProductos(result.data);
     };
 
     const deleteProducto = async (id) => {
-        await axios.delete(`http://localhost:8080/producto/${id}`);
+        await axios.delete(`http://localhost:8082/producto/${id}`);
         loadProductos();
     };
 
@@ -61,7 +63,7 @@ export default function Home() {
                                 <td>{producto.cantidad}</td>
                                 <td>{producto.categoria_id}</td>
                                 <td>
-                                    <img src={`http://localhost:8080${producto.imagen}`} alt={producto.titulo} style={{ width: '100px', height: '100px' }} />
+                                    <img src={`http://localhost:8082${producto.imagen}`} alt={producto.titulo} style={{ width: '100px', height: '100px' }} />
                                 </td>
                                 <td>
                                     <Link className="btn btn-primary mx-2" to={`/viewproducto/${producto.id}`}>Ver</Link>
