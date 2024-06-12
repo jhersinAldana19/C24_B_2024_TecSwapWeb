@@ -37,7 +37,7 @@ export default function OfrecerProducto() {
                 },
             });
 
-            const imagen_id = response.data; // Asumiendo que el backend devuelve el nombre del archivo
+            const imagen_id = response.data; 
 
             // Crear los datos del producto para enviar
             const dataToSend = {

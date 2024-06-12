@@ -10,7 +10,7 @@ import MisProductos from './pages/MisProductos';
 import SobreNosotros from './pages/SobreNosotros';
 import OfrecerProducto from './pages/OfrecerProducto';
 import Footer from './components/Footer';
-
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
           <Route exact path="/misproductos" element={<MisProductos />} /> 
           <Route exact path="/sobre" element={<SobreNosotros />} />
           <Route exact path="/ofrecer-producto" element={<OfrecerProducto />} />
+          <Route path="/login" component={Login} />
         </Routes>
         <Footer />
       </Router>

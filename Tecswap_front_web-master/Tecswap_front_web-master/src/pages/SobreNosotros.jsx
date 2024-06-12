@@ -1,13 +1,13 @@
 import React from 'react';
-import Portada from '../components/Portada'; // Asegúrate de que la ruta sea correcta
+import Portada from '../components/Portada'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css'; // Asegúrate de que el archivo CSS esté importado
-import '../assets/styles/sobreNosotros.css'; // Asegúrate de que la ruta sea correcta
+import '../App.css'; 
+import '../assets/styles/sobreNosotros.css';
 
 const SobreNosotros = () => {
     return (
         <div className="container-fluid main-container">
-            <Portada /> {/* Mueve la Portada fuera del content-container */}
+            <Portada /> 
             <div className="content-container">
                 <div className="container my-4">
                     <h1 className="sobre text-center comic-sans">Sobre nosotros</h1>
@@ -72,7 +72,7 @@ const SobreNosotros = () => {
                         <div className="col-md-6">
                             <div className="ratio ratio-16x9">
                                 <iframe 
-                                    src="https://www.youtube.com/embed/eff5Ou4FYAc" // Reemplaza VIDEO_ID con el ID del video de YouTube
+                                    src="https://www.youtube.com/embed/eff5Ou4FYAc"
                                     title="YouTube video" 
                                     allowFullScreen
                                 />

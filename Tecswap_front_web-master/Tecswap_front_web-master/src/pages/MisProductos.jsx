@@ -16,14 +16,13 @@ export default function MisProductos() {
     const loadProductos = async () => {
         try {
             const response = await axios.get("http://localhost:8080/productos");
-            // Simulate a 2-second delay
             setTimeout(() => {
                 setProducto(response.data);
                 setLoading(false);
             }, 2000);
         } catch (error) {
             console.error('Error al cargar los productos:', error);
-            setLoading(false); // Set loading to false even on error
+            setLoading(false);
         }
     };
 
@@ -56,7 +55,6 @@ export default function MisProductos() {
                         </thead>
                         <tbody>
                             {loading ? (
-                                // Show skeleton loader while loading
                                 Array.from({ length: 5 }).map((_, index) => (
                                     <tr key={index}>
                                         <th scope="row"><Skeleton /></th>

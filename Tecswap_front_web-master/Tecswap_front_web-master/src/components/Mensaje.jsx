@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css'; // Asegúrate de que el archivo CSS esté importado
+import '../App.css'; 
 
 const Mensaje = () => {
     return (

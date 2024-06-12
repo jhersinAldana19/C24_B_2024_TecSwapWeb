@@ -22,18 +22,18 @@ export default function Home() {
         const result = await axios.get("http://localhost:8080/productos");
         setTimeout(() => {
             setProductos(result.data);
-            setLoading(false); // set loading to false once data is loaded
-        }, 2000); // Simulate 2 seconds delay
+            setLoading(false);
+        }, 2000);
     };
 
     // para buscar los productos
     const searchProductos = async () => {
-        setLoading(true); // set loading to true when searching
+        setLoading(true); 
         const result = await axios.get(`http://localhost:8080/productos/search?query=${query}`);
         setTimeout(() => {
             setProductos(result.data);
-            setLoading(false); // set loading to false once data is loaded
-        }, 2000); // Simulate 2 seconds delay
+            setLoading(false); 
+        }, 2000); 
     };
 
     return (
@@ -50,13 +50,23 @@ export default function Home() {
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             style={{ 
-                                width: '500px', // Ancho específico del input
-                                padding: '10px', // Espaciado interno del input
-                                fontSize: '16px', // Tamaño de la fuente
-                                borderRadius: '15px' // Bordes redondeados
+                                width: '500px', 
+                                padding: '10px', 
+                                fontSize: '16px', 
+                                borderRadius: '15px'
                             }}
                         />
-                        <button className="btn custom-btn rounded-button mt-2" onClick={searchProductos}> Buscar</button>
+                        <button className="btn custom-btn rounded-button mt-2" onClick={searchProductos}
+                         style={{
+                            width: '150px', 
+                            padding: '10px', 
+                            fontSize: '16px', 
+                            borderRadius: '15px',
+                            marginTop: '0', 
+                            height: '40px' 
+                        }}> 
+                            Buscar
+                            </button>
                     </div>
                     <div className="row">
                         {loading ? (
@@ -81,7 +91,6 @@ export default function Home() {
                                 </div>
                             ))
                         ) : (
-                            // Render products once they are loaded
                             productos.map((producto) => (
                                 <div className="col-md-4" key={producto.id}>
                                     <div className="card mb-4 shadow-sm custom-card">
@@ -103,6 +112,9 @@ export default function Home() {
                                                 <div className="btn-group">
                                                     <Link className="btn btn-dark btn-sm mx-2" to={`/ofrecer-producto`}>Intercambiar</Link>
                                                 </div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 14 14">
+                                                    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M8.266 11.908a1.773 1.773 0 0 1-2.527 0L1.49 7.7c-2.84-2.842.87-9.12 5.511-4.478c4.634-4.633 8.344 1.644 5.511 4.478z"/>
+                                                </svg>
                                             </div>
                                         </div>
                                     </div>
