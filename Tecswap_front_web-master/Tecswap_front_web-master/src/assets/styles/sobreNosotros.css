@@ -1,0 +1,48 @@
+.main-container {
+    background-color: #f8f9fa; /* Color de fondo para todo el contenedor */
+    padding: 20px 0;
+}
+
+.content-container {
+    max-width: 1200px; /* Ajustar el ancho máximo del contenido */
+    margin: 0 auto;
+    background-color: white; /* Fondo blanco para el contenido */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.sobre {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 8px;
+}
+
+.card-img-top {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.list-unstyled li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.ratio {
+    background-color: #000;
+    overflow: hidden;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    position: relative;
+    height: 0;
+}
+
+.ratio iframe {
+    border: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}

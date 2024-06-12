@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import '../assets/styles/EditProducto.css';
 
 export default function EditProducto() {
     let navigate = useNavigate();
@@ -58,10 +59,10 @@ export default function EditProducto() {
     return (
         <div className="container">
             <div className="row">
-                <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+                <div className="col-md-8 offset-md-2 border rounded p-4 mt-2 shadow">
                     <h2 className="text-center m-4">Edición de productos</h2>
                     <form onSubmit={(e) => onSubmit(e)}>
-                        <div className="mb-3">
+                        <div className="form-group mb-3">
                             <label htmlFor="Titulo" className="form-label">Título</label>
                             <input
                                 type="text"
@@ -73,7 +74,7 @@ export default function EditProducto() {
                             />
                         </div>
 
-                        <div className="mb-3">
+                        <div className="form-group mb-3">
                             <label htmlFor="Descripcion" className="form-label">Descripción</label>
                             <input
                                 type="text"
@@ -85,7 +86,7 @@ export default function EditProducto() {
                             />
                         </div>
 
-                        <div className="mb-3">
+                        <div className="form-group mb-3">
                             <label htmlFor="Estado" className="form-label">Estado</label>
                             <select
                                 className="form-control"
@@ -100,7 +101,7 @@ export default function EditProducto() {
                             </select>
                         </div>
 
-                        <div className="mb-3">
+                        <div className="form-group mb-3">
                             <label htmlFor="Cantidad" className="form-label">Cantidad</label>
                             <input
                                 type="text"
@@ -112,7 +113,7 @@ export default function EditProducto() {
                             />
                         </div>
 
-                        <div className="mb-3">
+                        <div className="form-group mb-3">
                             <label htmlFor="Categoria" className="form-label">Categoría</label>
                             <input
                                 type="text"
@@ -124,7 +125,7 @@ export default function EditProducto() {
                             />
                         </div>
 
-                        <div className="mb-3">
+                        <div className="form-group mb-3">
                             <label htmlFor="Imagen" className="form-label">Imagen</label>
                             <input
                                 type="file"
@@ -132,11 +133,11 @@ export default function EditProducto() {
                                 name="imagen"
                                 onChange={(e) => onFileChange(e)}
                             />
-                            {imagen && <img src={`http://localhost:8080${imagen}`} alt={titulo} style={{ width: '100px', height: '100px', marginTop: '10px' }} />}
+                            {imagen && <img src={`http://localhost:8080${imagen}`} alt={titulo} className="product-preview mt-3" />}
                         </div>
 
-                        <button type="submit" className="btn btn-outline-primary">Enviar</button>
-                        <Link className="btn btn-outline-danger mx-2" to="/">Cancelar</Link>
+                        <button type="submit" className="btn btn-primary">Enviar</button>
+                        <Link className="btn btn-danger mx-2" to="/">Cancelar</Link>
                     </form>
                 </div>
             </div>

@@ -1,0 +1,46 @@
+/* ViewProducto.css */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.content-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item {
+    font-size: 18px;
+    padding: 15px;
+}
+
+.list-group-item b {
+    font-weight: 600;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}

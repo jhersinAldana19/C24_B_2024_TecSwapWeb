@@ -1,4 +1,37 @@
 /* MisProductos.css */
+.main-container {
+    background-color: #f8f9fa; /* Color de fondo para todo el contenedor */
+    padding: 20px 0;
+}
+
+.content-container {
+    max-width: 1200px; /* Ajustar el ancho máximo del contenido */
+    margin: 0 auto;
+    background-color: white; /* Fondo blanco para el contenido */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tittuloMisP {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.custom-table th, .custom-table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.img-thumbnail {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+.custom-text {
+    font-size: 16px;
+}
 
 .container {
     background-color: #f8f9fa;
@@ -7,8 +40,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.tituloMis {
+    color: black; 
+    border-radius: 10px;
+    padding: 20px;
+}
+
 h2 {
-    color: #007bff;
+    color: rgb(16, 16, 16);
     font-weight: bold;
 }
 
@@ -37,24 +76,24 @@ h2 {
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #00B1F7;
+    border-color: #00B1F7;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
+    background-color: #00B1F7;
+    border-color: #00B1F7;
 }
 
 .btn-outline-primary {
-    color: #007bff;
-    border-color: #007bff;
+    color: #00B1F7;
+    border-color: #00B1F7;
 }
 
 .btn-outline-primary:hover {
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #00B1F7;
+    border-color: #00B1F7;
 }
 
 .btn-danger {

@@ -1,9 +1,9 @@
 import React from 'react';
-
+import '../assets/styles/pasos.css';
 const StepsForTrueque = () => {
   return (
     <div className="steps-container">
-      <h2 className="title">¿Cómo funciona?</h2>
+      <h2 className="pasos title">¿Cómo funciona?</h2>
       <div className="steps">
         <div className="step">
           <div className="step-number">1</div>
