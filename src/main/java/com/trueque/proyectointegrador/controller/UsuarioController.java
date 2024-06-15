@@ -2,10 +2,12 @@ package com.trueque.proyectointegrador.controller;
 
 import com.trueque.proyectointegrador.model.Usuario;
 import com.trueque.proyectointegrador.service.UsuarioService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RestController
@@ -23,10 +25,16 @@ public class UsuarioController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Usuario usuario) {
-        if (usuarioService.findByEmail(usuario.getName()) != null) {
-            return ResponseEntity.badRequest().body("El usuario ya existe");
+        try {
+            if (usuarioService.findByEmail(usuario.getEmail()) != null) {
+                return ResponseEntity.badRequest().body("El usuario ya existe");
+            }
+            return ResponseEntity.ok(usuarioService.saveUsuario(usuario));
+        } catch (ConstraintViolationException e) {
+            return ResponseEntity.badRequest().body("Email ya está registrado.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al registrar el usuario: " + e.getMessage());
         }
-        return ResponseEntity.ok(usuarioService.saveUsuario(usuario));
     }
 
     @PostMapping("/login")
