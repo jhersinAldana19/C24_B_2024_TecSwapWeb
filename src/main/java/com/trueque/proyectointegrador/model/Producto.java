@@ -15,8 +15,11 @@ public class Producto {
     private String categoria_id;
     private String imagen;
 
-    private String usuarios_id;
+    @ManyToOne
+    @JoinColumn(name = "usuarios_id", nullable = false)
+    private Usuario usuario;
 
+    // getters y setters
     public Long getId() {
         return id;
     }
@@ -46,7 +49,6 @@ public class Producto {
     }
 
     public void setEstado(String estado) {
-        // Validar que el estado sea uno de los valores permitidos
         if ("pendiente".equals(estado) || "reservado".equals(estado) || "cancelado".equals(estado)) {
             this.estado = estado;
         } else {
@@ -78,12 +80,11 @@ public class Producto {
         this.imagen = imagen;
     }
 
-    public String getUsuarios_id() {
-        return usuarios_id;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios_id(String usuarios_id) {
-        this.usuarios_id = usuarios_id;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
-
 }
