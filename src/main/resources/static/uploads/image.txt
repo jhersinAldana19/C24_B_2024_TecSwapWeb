@@ -1,0 +1,9 @@
+API nativa de JavaScript utilizada para realizar solicitudes HTTP asincrónicas.
+
+Una biblioteca popular para realizar solicitudes HTTP, basada en promesas.
+
+Método de ciclo de vida que se utiliza comúnmente para realizar peticiones Ajax en componentes de clase.
+
+Sintaxis que se utiliza para manejar de manera más limpia las promesas y realizar peticiones asincrónicas en funciones.
+Método de React utilizado para actualizar el estado del componente después de recibir datos de una solicitud Ajax.
+
