@@ -36,13 +36,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/register", "/api/login").permitAll()
+                        .requestMatchers("/api/register", "/api/login", "/productos").permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults()) // Configurar autenticación básica
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/api/login").permitAll()
-                )
+                .httpBasic(withDefaults())
+                .formLogin(formLogin -> formLogin.disable()) // Deshabilita el formulario de login
                 .logout(logout -> logout.permitAll());
         return http.build();
     }
@@ -59,6 +57,20 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/register", "/api/login");
+        return (web) -> web.ignoring().requestMatchers("/api/register", "/api/login", "/productos");
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
     }
 }

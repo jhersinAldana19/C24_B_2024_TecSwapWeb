@@ -21,6 +21,13 @@ public class ProductoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @GetMapping("/user/products")
+    public List<Producto> getUserProducts(Authentication authentication) {
+        String email = authentication.getName();  // Obtenemos el email del usuario logueado
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();  // Buscamos al usuario por email
+        return productoRepository.findByUsuarioId(usuario.getId());  // Obtenemos los productos del usuario por su ID
+    }
+
     @PostMapping("/producto")
     Producto newProducto(@RequestBody Producto newProducto, Authentication authentication) {
         String username = authentication.getName();
