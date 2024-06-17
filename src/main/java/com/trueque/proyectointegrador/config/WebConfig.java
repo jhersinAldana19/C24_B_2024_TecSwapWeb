@@ -10,10 +10,10 @@ public class WebConfig {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
+        return new WebMvcConfigurer() { //devolviendo una nueva configuración para nuestra aplicación
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
+            public void addCorsMappings(CorsRegistry registry) { //nos permitirá configurar el CORS
+                registry.addMapping("/**") // significa cualquier ruta
                         .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")

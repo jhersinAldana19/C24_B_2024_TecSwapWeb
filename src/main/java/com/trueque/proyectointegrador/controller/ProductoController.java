@@ -11,47 +11,47 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("http://localhost:3000")
-@RestController
+@CrossOrigin("http://localhost:3000") //reciba solicitudes desde http://localhost:3000
+@RestController //manejará solicitudes HTTP y devolverá respuestas JSON
 public class ProductoController {
 
     @Autowired
     private ProductoRepository productoRepository;
-
     @Autowired
     private UsuarioRepository usuarioRepository;
+    // son como bases de datos en miniatura donde guardamos nuestros productos y usuarios
 
-    @GetMapping("/user/products")
-    public List<Producto> getUserProducts(Authentication authentication) {
+    @GetMapping("/user/products") //solicitudes GET a /user/products
+    public List<Producto> getUserProducts(Authentication authentication) { //lista de productos del usuario autenticado
         String email = authentication.getName();  // Obtenemos el email del usuario logueado
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();  // Buscamos al usuario por email
         return productoRepository.findByUsuarioId(usuario.getId());  // Obtenemos los productos del usuario por su ID
     }
 
-    @PostMapping("/producto")
-    Producto newProducto(@RequestBody Producto newProducto, Authentication authentication) {
-        String username = authentication.getName();
-        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow();
-        newProducto.setUsuario(usuario);
-        return productoRepository.save(newProducto);
+    @PostMapping("/producto") //solicitudes POST a /producto
+    public Producto newProducto(@RequestBody Producto newProducto, Authentication authentication) { //se crea un nuevo producto para el usuario autenticado
+        String username = authentication.getName(); //obtenemos el nombre de usuario del usuario autenticado
+        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow(); //buscamos al usuario en la base de datos usando su email
+        newProducto.setUsuario(usuario); //asociamos el nuevo producto con el usuario
+        return productoRepository.save(newProducto); //guardamos el nuevo producto en la base de datos y lo devolvemos
     }
 
     @GetMapping("/productos")
-    List<Producto> getAllProductos() {
-        return productoRepository.findAll();
+    public List<Producto> getAllProductos() { //devuelve una lista de todos los productos
+        return productoRepository.findAll(); //devuelve todos los productos
     }
 
-    @GetMapping("/producto/{id}")
-    Producto getProductoById(@PathVariable Long id) {
+    @GetMapping("/producto/{id}") //solicitudes GET a /producto/{id}, donde {id} es un valor variable
+    public Producto getProductoById(@PathVariable Long id) { //devuelve un producto por su ID
         return productoRepository.findById(id)
                 .orElseThrow(() -> new ProductoNotFoundException(id));
-    }
+    } //buscamos el producto en la base de datos por su ID y lo devolvemos. Si no se encuentra, lanzamos una excepción
 
-    @PutMapping("/producto/{id}")
-    Producto updateProducto(@RequestBody Producto newProducto, @PathVariable Long id, Authentication authentication) {
-        String username = authentication.getName();
-        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow();
-
+    @PutMapping("/producto/{id}") //función que manejará las solicitudes PUT a /producto/{id}
+    public Producto updateProducto(@RequestBody Producto newProducto, @PathVariable Long id, Authentication authentication) { //Esta función actualiza un producto existente
+        String username = authentication.getName(); //nombre de usuario del usuario autenticado
+        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow(); // buscamos al usuario por su email
+        // Buscamos el producto por su ID. Si no se encuentra, lanzamos una excepción. Si se encuentra, actualizamos sus campos y lo guardamos
         return productoRepository.findById(id)
                 .map(producto -> {
                     if (!producto.getUsuario().getName().equals(username)) {
@@ -68,24 +68,25 @@ public class ProductoController {
     }
 
     @DeleteMapping("/producto/{id}")
-    String deleteProducto(@PathVariable Long id, Authentication authentication) {
-        String username = authentication.getName();
-        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow();
-
+    public String deleteProducto(@PathVariable Long id, Authentication authentication) { //elimina un producto por su ID
+        String username = authentication.getName(); //nombre de usuario del usuario autenticado
+        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow(); //Buscamos al usuario en la base de datos usando su email
+        // buscamos el producto por su ID. Si no se encuentra, lanzamos una excepción
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new ProductoNotFoundException(id));
 
+        // Si el usuario autenticado no es el propietario del producto, lanzamos una excepción
         if (!producto.getUsuario().getName().equals(username)) {
             throw new IllegalArgumentException("No tienes permiso para eliminar este producto");
         }
 
-        productoRepository.deleteById(id);
+        productoRepository.deleteById(id);//Eliminamos el producto de la base de datos
         return "Producto con ID " + id + " se eliminó correctamente";
     }
 
-    @GetMapping("/productos/search")
-    List<Producto> searchProductos(@RequestParam String query) {
+    @GetMapping("/productos/search") //solicitudes GET a /productos/search
+    public List<Producto> searchProductos(@RequestParam String query) { // busca productos por título o descripción
         return productoRepository.findByTituloContainingIgnoreCaseOrDescripcionContainingIgnoreCase(query, query);
-    }
+    } //evolvemos una lista de productos que contienen la palabra clave en el título o la descripción, sin importar mayúsculas o minúsculas
 }
 

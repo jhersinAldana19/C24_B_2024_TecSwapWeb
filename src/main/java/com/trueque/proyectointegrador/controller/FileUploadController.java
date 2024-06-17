@@ -10,12 +10,12 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin("http://localhost:3000")
-@RestController
+@CrossOrigin("http://localhost:3000") //permita solicitudes desde http://localhost:3000
+@RestController //maneja solicitudes web y devuelve datos
 public class FileUploadController{
 
-    @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload") //manejará las solicitudes que envían archivos a la ruta /upload
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) { //toma un archivo como entrada y devuelve una respuesta HTTP
         try {
             // Define la ruta donde quieres guardar los archivos
             String directoryPath = "C:\\uploads";
