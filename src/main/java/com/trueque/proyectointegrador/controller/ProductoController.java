@@ -1,8 +1,10 @@
 package com.trueque.proyectointegrador.controller;
 
 import com.trueque.proyectointegrador.exception.ProductoNotFoundException;
+import com.trueque.proyectointegrador.model.Categoria;
 import com.trueque.proyectointegrador.model.Producto;
 import com.trueque.proyectointegrador.model.Usuario;
+import com.trueque.proyectointegrador.repository.CategoriaRepository;
 import com.trueque.proyectointegrador.repository.ProductoRepository;
 import com.trueque.proyectointegrador.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +23,28 @@ public class ProductoController {
     private UsuarioRepository usuarioRepository;
     // son como bases de datos en miniatura donde guardamos nuestros productos y usuarios
 
-    @GetMapping("/user/products") //solicitudes GET a /user/products
-    public List<Producto> getUserProducts(Authentication authentication) { //lista de productos del usuario autenticado
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
+    @GetMapping("/user/products")
+    public List<Producto> getUserProducts(Authentication authentication) {
         String email = authentication.getName();  // Obtenemos el email del usuario logueado
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();  // Buscamos al usuario por email
         return productoRepository.findByUsuarioId(usuario.getId());  // Obtenemos los productos del usuario por su ID
     }
 
-    @PostMapping("/producto") //solicitudes POST a /producto
-    public Producto newProducto(@RequestBody Producto newProducto, Authentication authentication) { //se crea un nuevo producto para el usuario autenticado
-        String username = authentication.getName(); //obtenemos el nombre de usuario del usuario autenticado
-        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow(); //buscamos al usuario en la base de datos usando su email
-        newProducto.setUsuario(usuario); //asociamos el nuevo producto con el usuario
-        return productoRepository.save(newProducto); //guardamos el nuevo producto en la base de datos y lo devolvemos
+    @PostMapping("/producto")
+    public Producto newProducto(@RequestBody Producto newProducto, Authentication authentication) {
+        String username = authentication.getName();
+        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow();
+        newProducto.setUsuario(usuario);
+
+        // Buscar la categoría por ID y establecerla
+        Categoria categoria = categoriaRepository.findById(newProducto.getCategoria().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Categoría no válida"));
+        newProducto.setCategoria(categoria);
+
+        return productoRepository.save(newProducto);
     }
 
     @GetMapping("/productos")
@@ -47,11 +58,11 @@ public class ProductoController {
                 .orElseThrow(() -> new ProductoNotFoundException(id));
     } //buscamos el producto en la base de datos por su ID y lo devolvemos. Si no se encuentra, lanzamos una excepción
 
-    @PutMapping("/producto/{id}") //función que manejará las solicitudes PUT a /producto/{id}
-    public Producto updateProducto(@RequestBody Producto newProducto, @PathVariable Long id, Authentication authentication) { //Esta función actualiza un producto existente
-        String username = authentication.getName(); //nombre de usuario del usuario autenticado
-        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow(); // buscamos al usuario por su email
-        // Buscamos el producto por su ID. Si no se encuentra, lanzamos una excepción. Si se encuentra, actualizamos sus campos y lo guardamos
+    @PutMapping("/producto/{id}")
+    public Producto updateProducto(@RequestBody Producto newProducto, @PathVariable Long id, Authentication authentication) {
+        String username = authentication.getName();
+        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow();
+
         return productoRepository.findById(id)
                 .map(producto -> {
                     if (!producto.getUsuario().getName().equals(username)) {
@@ -61,8 +72,13 @@ public class ProductoController {
                     producto.setDescripcion(newProducto.getDescripcion());
                     producto.setEstado(newProducto.getEstado());
                     producto.setCantidad(newProducto.getCantidad());
-                    producto.setCategoria_id(newProducto.getCategoria_id());
                     producto.setImagen(newProducto.getImagen());
+
+                    // Buscar la categoría por ID y establecerla
+                    Categoria categoria = categoriaRepository.findById(newProducto.getCategoria().getId())
+                            .orElseThrow(() -> new IllegalArgumentException("Categoría no válida"));
+                    producto.setCategoria(categoria);
+
                     return productoRepository.save(producto);
                 }).orElseThrow(() -> new ProductoNotFoundException(id));
     }

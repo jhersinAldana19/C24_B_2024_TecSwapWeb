@@ -12,7 +12,9 @@ public class Producto {
     private String descripcion;
     private String estado;
     private String cantidad;
-    private String categoria_id;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Categoria categoria;
     private String imagen;
 
     @ManyToOne
@@ -64,12 +66,12 @@ public class Producto {
         this.cantidad = cantidad;
     }
 
-    public String getCategoria_id() {
-        return categoria_id;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCategoria_id(String categoria_id) {
-        this.categoria_id = categoria_id;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public String getImagen() {
