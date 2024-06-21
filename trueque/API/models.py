@@ -103,8 +103,8 @@ class historial(models.Model):
 class SolicitudIntercambio(models.Model):
     producto_solicitado = models.ForeignKey('producto', related_name='producto_solicitado', on_delete=models.CASCADE)
     producto_ofrecido = models.ForeignKey('producto', related_name='producto_ofrecido', on_delete=models.CASCADE)
-    solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='solicitante', on_delete=models.CASCADE)
-    propietario = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='propietario', on_delete=models.CASCADE)
+    solicitante = models.ForeignKey('usuario', related_name='solicitante', on_delete=models.CASCADE)
+    propietario = models.ForeignKey('usuario', related_name='propietario', on_delete=models.CASCADE)
     aceptada = models.BooleanField(default=False)
     respondida = models.BooleanField(default=False)
     fecha = models.DateTimeField(auto_now_add=True)
