@@ -1,8 +1,11 @@
+from rest_framework import viewsets
+from .models import usuario, roles, categoria, producto, oferta, favorito, transaccion, historial, SolicitudIntercambio
+from .serializer import usuarioSerializer, rolesSerializer, categoriaSerializer, productoSerializer, ofertaSerializer, favoritoSerializer, transaccionSerializer, historialSerializer, SolicitudIntercambioSerializer
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import producto, usuario
+from rest_framework.permissions import IsAuthenticated
 
 @csrf_exempt
 # Create your views here.
@@ -49,3 +52,39 @@ def get_productos_by_usuario(request, usuario_id):
             return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+class usuarioViewSet(viewsets.ModelViewSet):
+    queryset = usuario.objects.all()
+    serializer_class = usuarioSerializer
+
+class rolesViewSet(viewsets.ModelViewSet):
+    queryset = roles.objects.all()
+    serializer_class = rolesSerializer
+
+class categoriaViewSet(viewsets.ModelViewSet):
+    queryset = categoria.objects.all()
+    serializer_class = categoriaSerializer
+
+class productoViewSet(viewsets.ModelViewSet):
+    queryset = producto.objects.all()
+    serializer_class = productoSerializer
+
+class ofertaViewSet(viewsets.ModelViewSet):
+    queryset = oferta.objects.all()
+    serializer_class = ofertaSerializer
+
+class favoritoViewSet(viewsets.ModelViewSet):
+    queryset = favorito.objects.all()
+    serializer_class = favoritoSerializer
+
+class transaccionViewSet(viewsets.ModelViewSet):
+    queryset = transaccion.objects.all()
+    serializer_class = transaccionSerializer
+
+class historialViewSet(viewsets.ModelViewSet):
+    queryset = historial.objects.all()
+    serializer_class = historialSerializer
+
+class SolicitudIntercambioViewSet(viewsets.ModelViewSet):
+    queryset = SolicitudIntercambio.objects.all()
+    serializer_class = SolicitudIntercambioSerializer
