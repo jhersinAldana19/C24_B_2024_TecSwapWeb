@@ -65,7 +65,7 @@ public class ProductoController {
 
         return productoRepository.findById(id)
                 .map(producto -> {
-                    if (!producto.getUsuario().getName().equals(username)) {
+                    if (!producto.getUsuario().getEmail().equals(username)) {
                         throw new IllegalArgumentException("No tienes permiso para actualizar este producto");
                     }
                     producto.setTitulo(newProducto.getTitulo());

@@ -13,7 +13,7 @@ public class WebConfig {
         return new WebMvcConfigurer() { //devolviendo una nueva configuración para nuestra aplicación
             @Override
             public void addCorsMappings(CorsRegistry registry) { //nos permitirá configurar el CORS
-                registry.addMapping("/**") // significa cualquier ruta
+                registry.addMapping("/**") // significa entrar a cualquier ruta
                         .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")

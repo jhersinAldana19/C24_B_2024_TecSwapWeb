@@ -33,6 +33,7 @@ public class UsuarioService implements UserDetailsService { //puede hacer cosas 
     }
 
     @Override //modificando una función de una clase superior
+    //es específicamente para la autenticación y es utilizada por Spring Security
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException { //carga los detalles del usuario por su email y puede lanzar una excepción si no encuentra al usuario
         //Busca al usuario por su email. Si no lo encuentra, lanza una excepción diciendo "Usuario no encontrado: " + email
         Usuario usuario = usuarioRepository.findByEmail(email)

@@ -7,6 +7,7 @@ import com.trueque.proyectointegrador.repository.SolicitudIntercambioRepository;
 import com.trueque.proyectointegrador.repository.ProductoRepository;
 import com.trueque.proyectointegrador.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,15 +51,24 @@ public class SolicitudIntercambioController {
     public List<SolicitudIntercambio> getSolicitudesIntercambio(Authentication authentication) {
         String username = authentication.getName();
         Usuario propietario = usuarioRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        return solicitudIntercambioRepository.findByPropietarioId(propietario.getId());
+        return solicitudIntercambioRepository.findByPropietarioIdAndRespondidaFalse(propietario.getId());
+    }
+
+    @GetMapping("/intercambio/historial")
+    public List<SolicitudIntercambio> getHistorialSolicitudesIntercambio(Authentication authentication) {
+        String username = authentication.getName();
+        Usuario propietario = usuarioRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return solicitudIntercambioRepository.findByPropietarioIdOrderedByFechaDesc(propietario.getId());
     }
 
     @PostMapping("/intercambio/responder/{id}")
-    public SolicitudIntercambio respondToSolicitudIntercambio(@PathVariable Long id, @RequestParam boolean aceptada) {
+    public SolicitudIntercambio respondToSolicitudIntercambio(@PathVariable Long id, @RequestParam boolean aceptada, Authentication authentication) {
         SolicitudIntercambio solicitudIntercambio = solicitudIntercambioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Solicitud de intercambio no encontrada"));
         solicitudIntercambio.setAceptada(aceptada);
         solicitudIntercambio.setRespondida(true);
-        return solicitudIntercambioRepository.save(solicitudIntercambio);
+        solicitudIntercambioRepository.save(solicitudIntercambio);
+
+        return solicitudIntercambio;
     }
 }
