@@ -18,6 +18,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.LoginActivity"
+            android:theme="@style/Theme.TecSwap"
             android:exported="false" />
         <activity
             android:name=".ui.activities.SplashActivity"

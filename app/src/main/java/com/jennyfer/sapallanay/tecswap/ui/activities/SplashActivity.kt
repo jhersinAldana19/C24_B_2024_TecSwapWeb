@@ -24,11 +24,11 @@ class SplashActivity : AppCompatActivity() {
 
     private fun runPostDelayed(){
         Handler(Looper.getMainLooper()).postDelayed({
-            goMainActivity2()
+            goToLoginActivity()
         }, 3000)
     }
-    private fun goMainActivity2(){
-        val intent = Intent(this, MainActivity2::class.java)
+    private fun goToLoginActivity(){
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }

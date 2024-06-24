@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">TecSwap</string>
-    <string name="login_button">Iniciar sesión con Google</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="category_txt">Categorías</string>
-    <string name="default_web_client_id">410073572951-722d524rpqs72j01a797lmniuo6e8ioi.apps.googleusercontent.com</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="cancelar_txt">Cancelar</string>
+    <string name="entendido_txt">Entendido</string>
 </resources>

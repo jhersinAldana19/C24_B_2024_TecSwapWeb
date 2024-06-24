@@ -2,6 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="first_theme">#FF00B1F7</color>
+    <color name="second_theme">#A300B1F7</color>
+    <color name="third_theme">#FF2C3971</color>
+    <color name="fouth_theme">#FFC4C4C4</color>
+    <color name="fifth_theme">#FF798184</color>
     <color name="white">#FFFFFF</color>
+
     <color name="color_login">#40000000</color>
+
 </resources>
