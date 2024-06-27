@@ -58,7 +58,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/register", "/api/login", "/productos");
+        return (web) -> web.ignoring().requestMatchers("/api/register", "/api/login", "/productos", "/api/carreras", "/categorias");
     } //decimos a Spring que ignore la seguridad para estas rutas
 
     @Bean

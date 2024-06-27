@@ -51,7 +51,7 @@ public class Producto {
     }
 
     public void setEstado(String estado) {
-        if ("pendiente".equals(estado) || "reservado".equals(estado) || "cancelado".equals(estado)) {
+        if ("pendiente".equals(estado) || "cancelado".equals(estado)) {
             this.estado = estado;
         } else {
             throw new IllegalArgumentException("Estado no válido");

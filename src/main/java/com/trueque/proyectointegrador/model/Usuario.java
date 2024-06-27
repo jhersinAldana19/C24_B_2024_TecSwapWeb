@@ -18,6 +18,17 @@ public class Usuario {
     private String phone;
     private String lastname;
     private String imagen;
+    @ManyToOne
+    @JoinColumn(name = "carrera_id", nullable = false)
+    private Carrera carrera;
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
 
     public Long getId() {
         return id;
@@ -75,13 +86,4 @@ public class Usuario {
         this.imagen = imagen;
     }
 
-    public String getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(String carrera) {
-        this.carrera = carrera;
-    }
-
-    private String carrera;
 }
