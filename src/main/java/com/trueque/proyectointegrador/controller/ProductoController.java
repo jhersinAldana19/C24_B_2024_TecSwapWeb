@@ -10,7 +10,10 @@ import com.trueque.proyectointegrador.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin("http://localhost:3000") //reciba solicitudes desde http://localhost:3000
@@ -34,15 +37,40 @@ public class ProductoController {
     }
 
     @PostMapping("/producto")
-    public Producto newProducto(@RequestBody Producto newProducto, Authentication authentication) {
-        String username = authentication.getName();
-        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow();
-        newProducto.setUsuario(usuario);
+    public Producto newProducto(
+            @RequestParam("titulo") String titulo,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("estado") String estado,
+            @RequestParam("cantidad") int cantidad,
+            @RequestParam("categoriaId") Long categoriaId,
+            @RequestParam("imagen") MultipartFile imagen,
+            Authentication authentication) throws IOException {
 
-        // Buscar la categoría por ID y establecerla
-        Categoria categoria = categoriaRepository.findById(newProducto.getCategoria().getId())
+        String directoryPath = "C:/uploads";
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String filePath = directoryPath + "/" + imagen.getOriginalFilename();
+        imagen.transferTo(new File(filePath));
+
+        Producto newProducto = new Producto();
+        newProducto.setTitulo(titulo);
+        newProducto.setDescripcion(descripcion);
+        newProducto.setEstado(estado);
+        newProducto.setCantidad(cantidad);
+
+        Categoria categoria = categoriaRepository.findById(categoriaId)
                 .orElseThrow(() -> new IllegalArgumentException("Categoría no válida"));
         newProducto.setCategoria(categoria);
+
+        String email = authentication.getName();
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        newProducto.setUsuario(usuario);
+
+        newProducto.setImagen(imagen.getOriginalFilename());
 
         return productoRepository.save(newProducto);
     }

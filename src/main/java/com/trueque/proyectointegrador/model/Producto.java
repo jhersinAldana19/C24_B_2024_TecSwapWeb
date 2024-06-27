@@ -11,7 +11,7 @@ public class Producto {
     private String titulo;
     private String descripcion;
     private String estado;
-    private String cantidad;
+    private int cantidad;
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
@@ -58,11 +58,11 @@ public class Producto {
         }
     }
 
-    public String getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(String cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
