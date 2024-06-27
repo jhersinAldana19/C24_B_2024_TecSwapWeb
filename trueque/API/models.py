@@ -3,13 +3,18 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 # Create your models here.
 
+class carrera(models.Model):
+    carrera=models.CharField(max_length=150)
+    def __str__(self):
+        return f"{self.carrera}"
+
 class usuario(models.Model):
     name = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    carrera = models.CharField(max_length=100)
+    carrera = models.ForeignKey(carrera, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='imagenes/',verbose_name='Imagen',null=True)
     def __str__(self):
         return f"{self.name} - {self.lastname}"
@@ -54,7 +59,6 @@ class producto(models.Model):
     imagen = models.ImageField(upload_to='imagenes/', verbose_name='Imagen', null=True)
     ESTADO_CHOICES = [
         ('pendiente', 'Pendiente'),
-        ('reservado', 'Reservado'),
         ('cancelado', 'Cancelado'),
     ]
 

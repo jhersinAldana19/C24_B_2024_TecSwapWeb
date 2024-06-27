@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import usuario, roles, categoria, producto, oferta, favorito, transaccion, historial, SolicitudIntercambio
-from .serializer import usuarioSerializer, rolesSerializer, categoriaSerializer, productoSerializer, ofertaSerializer, favoritoSerializer, transaccionSerializer, historialSerializer, SolicitudIntercambioSerializer
+from .models import usuario, roles, categoria, producto, oferta, favorito, transaccion, historial, SolicitudIntercambio, carrera
+from .serializer import usuarioSerializer, rolesSerializer, categoriaSerializer, productoSerializer, ofertaSerializer, favoritoSerializer, transaccionSerializer, historialSerializer, SolicitudIntercambioSerializer, carreraSerializer
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -88,3 +88,7 @@ class historialViewSet(viewsets.ModelViewSet):
 class SolicitudIntercambioViewSet(viewsets.ModelViewSet):
     queryset = SolicitudIntercambio.objects.all()
     serializer_class = SolicitudIntercambioSerializer
+    
+class carreraViewSet(viewsets.ModelViewSet):
+    queryset = carrera.objects.all()
+    serializer_class = carreraSerializer

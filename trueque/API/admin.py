@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import usuario, roles, categoria, producto, oferta, favorito, transaccion, historial, SolicitudIntercambio
+from .models import usuario, roles, categoria, producto, oferta, favorito, transaccion, historial, SolicitudIntercambio, carrera
 
+admin.site.register(carrera)
 admin.site.register(usuario)
 admin.site.register(roles)
 admin.site.register(categoria)

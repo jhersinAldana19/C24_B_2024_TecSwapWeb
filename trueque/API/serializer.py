@@ -1,6 +1,11 @@
 from rest_framework import serializers
-from .models import usuario, roles, categoria, producto, oferta, favorito, transaccion, historial, SolicitudIntercambio
+from .models import usuario, roles, categoria, producto, oferta, favorito, transaccion, historial, SolicitudIntercambio, carrera
         
+class carreraSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = carrera
+        fields = '__all__'        
+
 class usuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = usuario
