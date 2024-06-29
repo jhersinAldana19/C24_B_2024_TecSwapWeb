@@ -1,6 +1,8 @@
 package com.trueque.proyectointegrador.controller;
 
+import com.trueque.proyectointegrador.model.Carrera;
 import com.trueque.proyectointegrador.model.Usuario;
+import com.trueque.proyectointegrador.service.CarreraService;
 import com.trueque.proyectointegrador.service.UsuarioService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +16,44 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api") //solicitudes que empiecen con /api se manejarán en esta clase.
+@RequestMapping("/api")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService; //servicio que usamos para trabajar con usuarios
-    private final PasswordEncoder passwordEncoder; //herramienta que usamos para codificar contraseñas
+    private final UsuarioService usuarioService;
+    private final CarreraService carreraService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired //queremos que inyecte automáticamente estas dependencias cuando se crea la clase
-    public UsuarioController(UsuarioService usuarioService, PasswordEncoder passwordEncoder) { //se ejecuta cuando creamos un nuevo UsuarioController y establece las dependencias
+    @Autowired
+    public UsuarioController(UsuarioService usuarioService, CarreraService carreraService, PasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
+        this.carreraService = carreraService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/register") //solicitudes POST a /api/register
-    public ResponseEntity<?> registerUser(@RequestBody Usuario usuario) { //registra un nuevo usuario
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody Map<String, Object> payload) {
         try {
-            if (usuarioService.findByEmail(usuario.getEmail()) != null) { //comprueba si ya existe un usuario con el email proporcionado
+            String email = (String) payload.get("email");
+            if (usuarioService.findByEmail(email) != null) {
                 return ResponseEntity.badRequest().body("El usuario ya existe");
             }
-            return ResponseEntity.ok(usuarioService.saveUsuario(usuario));//Si no hay errores, guarda el nuevo usuario y devuelve una respuesta exitosa
+
+            Usuario usuario = new Usuario();
+            usuario.setName((String) payload.get("name"));
+            usuario.setLastname((String) payload.get("lastname"));
+            usuario.setPhone((String) payload.get("phone"));
+            usuario.setEmail(email);
+            usuario.setPassword((String) payload.get("password"));
+            usuario.setImagen((String) payload.get("imagen"));
+
+            Long carreraId = Long.valueOf((Integer) payload.get("carrera_id"));
+            Carrera carrera = carreraService.findById(carreraId);
+            if (carrera == null) {
+                return ResponseEntity.badRequest().body("Carrera no encontrada");
+            }
+            usuario.setCarrera(carrera);
+
+            return ResponseEntity.ok(usuarioService.saveUsuario(usuario));
         } catch (ConstraintViolationException e) {
             return ResponseEntity.badRequest().body("Email ya está registrado.");
         } catch (Exception e) {
@@ -51,4 +72,7 @@ public class UsuarioController {
         response.put("name", user.getName()); //Añade el nombre del usuario al mapa de la respuesta
         return ResponseEntity.ok(response); //Devuelve una respuesta exitosa con el nombre del usuario
     }
+
+
+
 }
