@@ -9,5 +9,6 @@
     <color name="white">#FFFFFF</color>
 
     <color name="color_login">#40000000</color>
+    <color name="link_color">#FF00B1F7</color>
 
 </resources>

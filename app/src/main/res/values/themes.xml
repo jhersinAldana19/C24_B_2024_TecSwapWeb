@@ -16,14 +16,6 @@
         <item name="android:color">@color/first_theme</item>
     </style>
 
-    <style name="Theme.FragmentCustom" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your fragment theme here -->
-        <item name="colorPrimary">@android:color/transparent</item>
-        <item name="colorPrimaryVariant">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:background">@android:color/white</item>
-        <item name="android:padding">0dp</item>
-    </style>
 
     <style name="Theme.TecSwap.Profile" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>

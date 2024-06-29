@@ -10,7 +10,6 @@ import com.jennyfer.sapallanay.tecswap.R
 
 class ExplorarFragment : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -18,6 +17,5 @@ class ExplorarFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_explorar, container, false)
     }
-
-
 }
+

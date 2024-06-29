@@ -1,72 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.fragments.LoginTabFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+        <variable
+            name="viewModel"
+            type="com.jennyfer.sapallanay.tecswap.ui.viewmodel.AuthViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.LoginTabFragment">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/logo2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/login_email"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:padding="8dp"
+            android:hint="@string/email_txt"
+            android:drawableLeft="@drawable/round_email_24"
+            android:drawablePadding="8dp"
+            android:background="@drawable/edittext_bkg"
+            android:text="@={viewModel.email}"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"/>
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:hint="@string/password_txt"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/round_lock_24"
+            android:drawablePadding="8dp"
+            android:background="@drawable/edittext_bkg"
+            android:text="@={viewModel.password}"
+            app:layout_constraintTop_toBottomOf="@+id/login_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"/>
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/loguin_txt"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            app:layout_constraintTop_toBottomOf="@+id/login_password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"/>
+
+        <TextView
+            android:id="@+id/signup_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginTop="20dp"
+            android:text="@string/no_account_signup"
+            android:textColor="@color/fifth_theme"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/login_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" />
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/logo2"/>
-
-            <EditText
-                android:layout_width="300dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:id="@+id/login_email"
-                android:layout_marginTop="30dp"
-                android:padding="8dp"
-                android:hint="Email"
-                android:drawableLeft="@drawable/round_email_24"
-                android:drawablePadding="8dp"
-                android:background="@drawable/edittext_bkg"/>
-
-            <EditText
-                android:layout_width="300dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:id="@+id/login_password"
-                android:layout_marginTop="20dp"
-                android:padding="8dp"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:drawableLeft="@drawable/round_lock_24"
-                android:drawablePadding="8dp"
-                android:background="@drawable/edittext_bkg"/>
-
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:text="Iniciar sesión"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:background="@drawable/button_background" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 
 
 
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-
-</LinearLayout>

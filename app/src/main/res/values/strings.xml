@@ -6,4 +6,16 @@
     <string name="logout">Cerrar sesión</string>
     <string name="cancelar_txt">Cancelar</string>
     <string name="entendido_txt">Entendido</string>
+    <string name="email_txt">Email</string>
+    <string name="password_txt">Contraseña</string>
+    <string name="loguin_txt">Iniciar Sesión</string>
+    <string name="name_txt">Nombre</string>
+    <string name="lastname_txt">Apellido</string>
+    <string name="phone_txt">Teléfono</string>
+    <string name="password_again_txt">Confirmar Contraseña</string>
+    <string name="carrer_txt">Carrera</string>
+    <string name="register_txt">Registrarse</string>
+    <string name="no_account_signup">¿No tiene cuenta? Regístrate</string>
+    <string name="already_have_account_login">¿Ya tienes una cuenta? <u>Iniciar sesión</u></string>
+
 </resources>
