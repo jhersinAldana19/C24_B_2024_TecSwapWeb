@@ -11,7 +11,7 @@ class carrera(models.Model):
 class usuario(models.Model):
     name = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
+    phone = models.CharField(max_length=9)
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     carrera = models.ForeignKey(carrera, on_delete=models.CASCADE)
