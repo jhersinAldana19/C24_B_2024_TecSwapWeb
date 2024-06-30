@@ -36,7 +36,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { //función llamada securityFilterChain
         http.csrf(csrf -> csrf.disable()) // desactivamos una protección llamada CSRF
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/register", "/api/login", "/productos").permitAll() // permite que cualquiera pueda acceder a estas rutas
+                        .requestMatchers("/api/register", "/api/login", "/productos", "/uploads/**", "/api/carreras").permitAll() // permite que cualquiera pueda acceder a estas rutas
                         .anyRequest().authenticated() // para cualquier otra ruta, el usuario debe estar autenticado
                 )
                 .httpBasic(withDefaults())
@@ -58,7 +58,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/register", "/api/login", "/productos");
+        return (web) -> web.ignoring().requestMatchers("/api/register", "/api/login", "/productos", "/uploads/**", "/api/carreras");
     } //decimos a Spring que ignore la seguridad para estas rutas
 
     @Bean

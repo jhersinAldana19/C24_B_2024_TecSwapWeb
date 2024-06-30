@@ -8,9 +8,13 @@ import com.trueque.proyectointegrador.repository.CategoriaRepository;
 import com.trueque.proyectointegrador.repository.ProductoRepository;
 import com.trueque.proyectointegrador.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,8 +90,16 @@ public class ProductoController {
                 .orElseThrow(() -> new ProductoNotFoundException(id));
     } //buscamos el producto en la base de datos por su ID y lo devolvemos. Si no se encuentra, lanzamos una excepción
 
-    @PutMapping("/producto/{id}")
-    public Producto updateProducto(@RequestBody Producto newProducto, @PathVariable Long id, Authentication authentication) {
+    @PutMapping(value = "/producto/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Producto updateProducto(
+            @PathVariable Long id,
+            @RequestParam("titulo") String titulo,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("estado") String estado,
+            @RequestParam("cantidad") int cantidad,
+            @RequestParam("categoriaId") Long categoriaId,
+            @RequestParam(value = "imagen", required = false) MultipartFile imagen,
+            Authentication authentication) throws IOException {
         String username = authentication.getName();
         Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow();
 
@@ -96,41 +108,69 @@ public class ProductoController {
                     if (!producto.getUsuario().getEmail().equals(username)) {
                         throw new IllegalArgumentException("No tienes permiso para actualizar este producto");
                     }
-                    producto.setTitulo(newProducto.getTitulo());
-                    producto.setDescripcion(newProducto.getDescripcion());
-                    producto.setEstado(newProducto.getEstado());
-                    producto.setCantidad(newProducto.getCantidad());
-                    producto.setImagen(newProducto.getImagen());
+                    producto.setTitulo(titulo);
+                    producto.setDescripcion(descripcion);
+                    producto.setEstado(estado);
+                    producto.setCantidad(cantidad);
 
-                    // Buscar la categoría por ID y establecerla
-                    Categoria categoria = categoriaRepository.findById(newProducto.getCategoria().getId())
+                    Categoria categoria = categoriaRepository.findById(categoriaId)
                             .orElseThrow(() -> new IllegalArgumentException("Categoría no válida"));
                     producto.setCategoria(categoria);
+
+                    if (imagen != null && !imagen.isEmpty()) {
+                        String directoryPath = "C:/uploads";
+                        File directory = new File(directoryPath);
+                        if (!directory.exists()) {
+                            directory.mkdirs();
+                        }
+
+                        String filePath = directoryPath + "/" + imagen.getOriginalFilename();
+                        try {
+                            imagen.transferTo(new File(filePath));
+                        } catch (IOException e) {
+                            throw new RuntimeException("Error guardando el archivo de imagen", e);
+                        }
+                        producto.setImagen(imagen.getOriginalFilename());
+                    }
 
                     return productoRepository.save(producto);
                 }).orElseThrow(() -> new ProductoNotFoundException(id));
     }
 
     @DeleteMapping("/producto/{id}")
-    public String deleteProducto(@PathVariable Long id, Authentication authentication) { //elimina un producto por su ID
-        String username = authentication.getName(); //nombre de usuario del usuario autenticado
-        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow(); //Buscamos al usuario en la base de datos usando su email
-        // buscamos el producto por su ID. Si no se encuentra, lanzamos una excepción
-        Producto producto = productoRepository.findById(id)
-                .orElseThrow(() -> new ProductoNotFoundException(id));
+    public ResponseEntity<?> deleteProducto(@PathVariable Long id, Authentication authentication) {
+        try {
+            String username = authentication.getName();
+            Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow();
 
-        // Si el usuario autenticado no es el propietario del producto, lanzamos una excepción
-        if (!producto.getUsuario().getName().equals(username)) {
-            throw new IllegalArgumentException("No tienes permiso para eliminar este producto");
+            Producto producto = productoRepository.findById(id)
+                    .orElseThrow(() -> new ProductoNotFoundException(id));
+
+            if (!producto.getUsuario().getEmail().equals(username)) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permiso para eliminar este producto");
+            }
+
+            productoRepository.deleteById(id);
+            return ResponseEntity.ok("Producto con ID " + id + " se eliminó correctamente");
+        } catch (ProductoNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el producto: " + e.getMessage());
         }
-
-        productoRepository.deleteById(id);//Eliminamos el producto de la base de datos
-        return "Producto con ID " + id + " se eliminó correctamente";
     }
 
     @GetMapping("/productos/search") //solicitudes GET a /productos/search
     public List<Producto> searchProductos(@RequestParam String query) { // busca productos por título o descripción
         return productoRepository.findByTituloContainingIgnoreCaseOrDescripcionContainingIgnoreCase(query, query);
+    } //evolvemos una lista de productos que contienen la palabra clave en el título o la descripción, sin importar mayúsculas o minúsculas
+
+    @GetMapping("/categoria/{id}/productos")
+    public List<Producto> getProductosByCategoria(@PathVariable Long id) {
+        Categoria categoria = categoriaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Categoría no válida"));
+        return productoRepository.findByCategoria(categoria);
     } //evolvemos una lista de productos que contienen la palabra clave en el título o la descripción, sin importar mayúsculas o minúsculas
 }
 
