@@ -65,10 +65,20 @@ public class SolicitudIntercambioController {
     public SolicitudIntercambio respondToSolicitudIntercambio(@PathVariable Long id, @RequestParam boolean aceptada, Authentication authentication) {
         SolicitudIntercambio solicitudIntercambio = solicitudIntercambioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Solicitud de intercambio no encontrada"));
+
         solicitudIntercambio.setAceptada(aceptada);
         solicitudIntercambio.setRespondida(true);
-        solicitudIntercambioRepository.save(solicitudIntercambio);
 
-        return solicitudIntercambio;
+        if (aceptada) {
+            Producto productoSolicitado = solicitudIntercambio.getProductoSolicitado();
+            productoSolicitado.setEstado("cancelado");
+            productoRepository.save(productoSolicitado);
+        } else {
+            Producto productoOfrecido = solicitudIntercambio.getProductoOfrecido();
+            productoOfrecido.setEstado("pendiente");
+            productoRepository.save(productoOfrecido);
+        }
+
+        return solicitudIntercambioRepository.save(solicitudIntercambio);
     }
 }
