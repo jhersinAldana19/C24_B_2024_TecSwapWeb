@@ -1,9 +1,11 @@
 package com.trueque.proyectointegrador.controller;
 
 import com.trueque.proyectointegrador.model.Carrera;
+import com.trueque.proyectointegrador.model.Roles;
 import com.trueque.proyectointegrador.model.Usuario;
 import com.trueque.proyectointegrador.repository.UsuarioRepository;
 import com.trueque.proyectointegrador.service.CarreraService;
+import com.trueque.proyectointegrador.service.RolesService;
 import com.trueque.proyectointegrador.service.UsuarioService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +26,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:3000")
@@ -37,12 +36,14 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final CarreraService carreraService;
+    private final RolesService rolesService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService, CarreraService carreraService, PasswordEncoder passwordEncoder) {
+    public UsuarioController(UsuarioService usuarioService, CarreraService carreraService, RolesService rolesService, PasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
         this.carreraService = carreraService;
+        this.rolesService = rolesService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -82,6 +83,10 @@ public class UsuarioController {
             }
             usuario.setCarrera(carrera);
 
+            // Asigna el rol de "usuario"
+            Roles rolUsuario = rolesService.findByTipo("usuario");
+            usuario.setRoles(rolUsuario);
+
             return ResponseEntity.ok(usuarioService.saveUsuario(usuario));
         } catch (ConstraintViolationException e) {
             return ResponseEntity.badRequest().body("Email ya está registrado.");
@@ -90,17 +95,20 @@ public class UsuarioController {
         }
     }
 
-
-    @PostMapping("/login")//solicitudes POST a /api/login
-    public ResponseEntity<?> loginUser(@RequestBody Usuario usuario) { //Esta función maneja el inicio de sesión de un usuario
-        Usuario user = usuarioService.findByEmail(usuario.getEmail()); //Busca un usuario por su email
-        if (user == null || !passwordEncoder.matches(usuario.getPassword(), user.getPassword())) { //si el usuario existe y si la contraseña proporcionada coincide con la contraseña almacenada
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody Usuario usuario) {
+        Usuario user = usuarioService.findByEmail(usuario.getEmail());
+        if (user == null || !passwordEncoder.matches(usuario.getPassword(), user.getPassword())) {
             return ResponseEntity.badRequest().body("Usuario o contraseña incorrecta");
-        }// Si el usuario no existe o la contraseña no coincide, devuelve un error diciendo "Usuario o contraseña incorrecta"
+        }
 
-        Map<String, Object> response = new HashMap<>(); //Crea un nuevo mapa para la respuesta
-        response.put("name", user.getName()); //Añade el nombre del usuario al mapa de la respuesta
-        return ResponseEntity.ok(response); //Devuelve una respuesta exitosa con el nombre del usuario
+        Map<String, Object> response = new HashMap<>();
+        response.put("name", user.getName());
+        response.put("email", user.getEmail());
+        response.put("id", user.getId());
+        response.put("roles", user.getRoles().getTipo()); // Devuelve el rol del usuario
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/profile")
@@ -127,25 +135,21 @@ public class UsuarioController {
         }
 
         try {
-            String email = authentication.getName(); // Obtén el email del usuario autenticado
+            String email = authentication.getName();
             Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-            // Define la ruta donde quieres guardar los archivos
             String directoryPath = "C:/uploads";
             File directory = new File(directoryPath);
 
-            // Si la ruta no existe, crearla
             if (!directory.exists()) {
                 directory.mkdirs();
             }
 
-            // Guardar el archivo
             String fileName = imagen.getOriginalFilename();
             Path filePath = Paths.get(directoryPath, fileName);
             Files.copy(imagen.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            // Actualizar la entidad usuario
-            usuario.setImagen(fileName); // Suponiendo que tienes un campo `imagen` en tu entidad Usuario
+            usuario.setImagen(fileName);
             usuarioRepository.save(usuario);
 
             return ResponseEntity.ok(usuario);
@@ -171,5 +175,4 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating user data");
         }
     }
-
 }
