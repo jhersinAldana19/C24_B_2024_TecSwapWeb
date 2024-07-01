@@ -22,6 +22,18 @@ public class Usuario {
     @JoinColumn(name = "carrera_id", nullable = false)
     private Carrera carrera;
 
+    @ManyToOne
+    @JoinColumn(name = "roles_id", nullable = false)
+    private Roles roles;
+
+    public Roles getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Roles roles) {
+        this.roles = roles;
+    }
+
     public Carrera getCarrera() {
         return carrera;
     }
