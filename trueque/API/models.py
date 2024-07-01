@@ -7,24 +7,7 @@ class carrera(models.Model):
     carrera=models.CharField(max_length=150)
     def __str__(self):
         return f"{self.carrera}"
-
-class usuario(models.Model):
-    name = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100)
-    phone = models.CharField(max_length=9)
-    email = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    carrera = models.ForeignKey(carrera, on_delete=models.CASCADE)
-    imagen = models.ImageField(upload_to='imagenes/',verbose_name='Imagen',null=True)
-    def __str__(self):
-        return f"{self.name} - {self.lastname}"
-    
-    def delete(self, using=None, keep_parents=False):
-        self.imagen.delete(self.imagen.name)
-        super().delete()
-    
 class roles(models.Model):
-    usuarios = models.ForeignKey(usuario, on_delete=models.CASCADE)
     ESTADO_CHOICES = [
         ('usuario', 'Usuario'),
         ('administrador', 'Administrar'),
@@ -37,9 +20,24 @@ class roles(models.Model):
     )
     
     def __str__(self):
-        return f"{self.tipo} - {self.usuarios}"
+        return f"{self.tipo}"
+
+class usuario(models.Model):
+    name = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    carrera = models.ForeignKey(carrera, on_delete=models.CASCADE)
+    roles = models.ForeignKey(roles, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to='imagenes/',verbose_name='Imagen',null=True)
+    def __str__(self):
+        return f"{self.name} - {self.lastname}"
     
-    
+    def delete(self, using=None, keep_parents=False):
+        self.imagen.delete(self.imagen.name)
+        super().delete()
+
 class categoria(models.Model):
     tipo = models.CharField(max_length=100)
     def __str__(self):

@@ -6,10 +6,92 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import authenticate, login
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.hashers import check_password
+from rest_framework.parsers import MultiPartParser, FormParser
+from django.contrib.auth.hashers import make_password, check_password
+from django.views.decorators.http import require_http_methods
 
 @csrf_exempt
 # Create your views here.
 
+@api_view(['DELETE'])
+def delete_usuario(request, pk):
+    try:
+        user = usuario.objects.get(pk=pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except usuario.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['POST'])
+def create_categoria(request):
+    serializer = categoriaSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+@api_view(['POST'])
+def create_carrera(request):
+    serializer = carreraSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+@api_view(['POST'])
+def login_view(request):
+    data = request.data
+    email = data.get('email')
+    password = data.get('password')
+    try:
+        user = usuario.objects.get(email=email)
+        if check_password(password, user.password):
+            user_data = usuarioSerializer(user).data
+            user_data['isAdmin'] = user.roles.tipo == 'administrador'
+            return JsonResponse(user_data)
+        else:
+            return JsonResponse({'error': 'Invalid credentials'}, status=400)
+    except usuario.DoesNotExist:
+        return JsonResponse({'error': 'Invalid credentials'}, status=400)
+
+@api_view(['POST'])
+def register_view(request):
+    data = request.data
+    file = request.FILES.get('imagen')  # Obtiene la imagen del archivo subido
+    data['password'] = make_password(data['password'])  # Encripta la contraseña
+
+    # Crea una instancia de usuario sin guardar en la base de datos aún
+    user = usuario(
+        name=data.get('name'),
+        lastname=data.get('lastname'),
+        phone=data.get('phone'),
+        email=data.get('email'),
+        password=data.get('password'),
+        carrera_id=data.get('carrera'),
+        imagen=file  # Asigna la imagen subida
+    )
+
+    # Asigna el rol de usuario por defecto
+    try:
+        role = roles.objects.get(tipo='administrador')
+    except roles.DoesNotExist:
+        return JsonResponse({'error': 'El rol especificado no existe.'}, status=400)
+    
+    user.roles = role
+
+    # Guarda el usuario en la base de datos
+    try:
+        user.save()
+        return JsonResponse(usuarioSerializer(user).data, status=201)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 def create_producto(request):
     if request.method == 'POST':
         data = json.loads(request.body)

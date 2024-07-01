@@ -7,6 +7,7 @@ class carreraSerializer(serializers.ModelSerializer):
         fields = '__all__'        
 
 class usuarioSerializer(serializers.ModelSerializer):
+    carrera = serializers.StringRelatedField()
     class Meta:
         model = usuario
         fields = '__all__'
@@ -22,6 +23,7 @@ class categoriaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class productoSerializer(serializers.ModelSerializer):
+    usuarios = serializers.StringRelatedField()
     class Meta:
         model = producto
         fields = '__all__'
@@ -47,6 +49,11 @@ class historialSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class SolicitudIntercambioSerializer(serializers.ModelSerializer):
+    solicitante = serializers.StringRelatedField()
+    propietario = serializers.StringRelatedField()
+    producto_solicitado = serializers.StringRelatedField()
+    producto_ofrecido = serializers.StringRelatedField()
+
     class Meta:
         model = SolicitudIntercambio
         fields = '__all__'
